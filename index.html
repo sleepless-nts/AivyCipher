@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Aivy Cipher</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
             body {
                 background-color: #fcf5eb;
@@ -54,6 +55,9 @@
             #main {
                 min-width: 700px;
             }
+            textarea {
+                width: calc(100% - 30px);
+            }
             ul {
                 padding: 0;
                 margin: 0;
@@ -61,6 +65,19 @@
             li {
                 list-style-type:disc;
                 margin-left: 10px;
+            }
+            @media screen and (max-width: 700px) {
+                #container {
+                    flex-direction: column-reverse;
+                }
+                #main {
+                    min-width: 0;
+                }
+            }
+            .alphabet {
+                font-size: 40px;
+                display: flex;
+                flex-wrap: wrap;
             }
         </style>
         <script type="text/javascript">
@@ -147,7 +164,7 @@
             <div id="main">
                 <div id="seccion-descifrar">
                     <h2>Descifrar</h2>
-                    <div id="clave" style="font-size: 40px;">
+                    <div id="clave" class="alphabet">
                     </div>
                     
                     <h3>Resultado <button onclick="clearOutput('output');">Limpiar</button></h3>
@@ -157,7 +174,7 @@
                 </div>
                 <div id="seccion-cifrar">
                     <h2>Cifrar</h2>
-                    <textarea id="textarea" cols="60" rows="5"></textarea>
+                    <textarea id="textarea" rows="5"></textarea>
                     <br />
                     <input type="button" value="Cifrar" onclick="encode();">
                     <h3>Resultado <input type="button" value="Limpiar" onclick="clearOutput('target-span');"></h3>
@@ -195,8 +212,11 @@
             
             [...symbols].forEach((c) => {
                 el = document.getElementById('clave');
-                el.innerHTML += "<div style='display:inline-block;' id='symbols'><span class='zf' onclick='decode(this);' title='"+c+"'>"+c+"</span></div>";
+                el.innerHTML += "<div id='symbols'><span class='zf' onclick='decode(this);' title='"+c+"'>"+c+"</span></div>";
             });
+
+            // Event listener to cipher text when typing in textarea 
+            document.getElementById('textarea').addEventListener('keyup', encode);
         </script>
     </body>
 </html>
